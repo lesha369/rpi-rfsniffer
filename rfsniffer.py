@@ -45,7 +45,7 @@ def play(args, buttonsdb):
     GPIO.setup(args.txpin, GPIO.OUT, initial=GPIO.LOW)
     for button in args.button:
         for i, (timing, level) in enumerate(buttonsdb[button]):
-            if i is not 0:
+            if i != 0:
                 # Busy-sleep (gives a better time granularity than
                 # sleep() but at the cost of busy looping)
                 now = time.time()
@@ -59,7 +59,7 @@ def read_timings(rx_pin):
     capture = []
     while True:
         start = time.time()
-        if GPIO.wait_for_edge(rx_pin, GPIO.BOTH, timeout=1000):
+        if GPIO.wait_for_edge(rx_pin, GPIO.BOTH, timeout=200):
             capture.append((time.time() - start, GPIO.input(rx_pin)))
 
         elif len(capture) < 5:  # Any pattern is likely larger than 5 bits
