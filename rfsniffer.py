@@ -31,6 +31,7 @@ import os
 import shelve
 import time
 import warnings
+import sys
 
 try:
     import RPi.GPIO as GPIO
@@ -71,9 +72,11 @@ def read_timings(rx_pin):
 def record(args, buttons):
     GPIO.setup(args.rxpin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-    print('Press', args.button)
+    sys.stdout.write('Press ' + args.button + '\n')
+    sys.stdout.flush()
     sample = read_timings(args.rxpin)
-    print('Recorded', len(sample), 'bit transitions')
+    sys.stdout.write('Recorded ' + str(len(sample)) + ' bit transitions\n')
+    sys.stdout.flush()
     buttons[args.button] = sample
 
 
